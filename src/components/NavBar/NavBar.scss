@@ -1,0 +1,40 @@
+#rbNavbar {
+    background-color: #232f3e !important;
+}
+
+#searchInput {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#searchBtn {
+    cursor: pointer;
+    border: none;
+    padding: 0.375rem 0.75rem;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
+
+#dropDown {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    #basic-nav-dropdown {
+        color: #fff;
+    }
+}
+
+#dropdownItem {
+    // color: white;
+    color: #000;
+    // background-color: #000;
+}
+
+#logo {
+    width: 50px;
+}
