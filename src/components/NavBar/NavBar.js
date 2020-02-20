@@ -1,35 +1,22 @@
 import React, { Component } from 'react';
 import './NavBar.scss';
 
+import { connect } from 'react-redux';
+
 // import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import Form from 'react-bootstrap/Form';
+import FormControl from 'react-bootstrap/FormControl';
+import Button from 'react-bootstrap/Button';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { NavLink } from 'react-router-dom';
 import Logo from '../../../src/assets/img/logo.png';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUserAlt, faCartPlus, faKey } from '@fortawesome/free-solid-svg-icons';
 
 export class NavBar extends Component {
 
-    constructor(props) {
-
-        super(props);
-    
-          this.state = {
-            searchTerm: ''
-          }
-    
-          // this.searchTerm = '';
-          this.isCollapsed = true;
-          this.token = '';
-    }
-    
-      // get token() {
-      //   return localStorage.getItem('token');
-      // }
-    
     collapse = () => {
         this.isCollapsed = true;
     }
@@ -51,49 +38,53 @@ export class NavBar extends Component {
 
         if(event.target.name === 'searchBtn') console.log("Hi there, " + event.target.value);
     }
+
+    componentDidUpdate() {
+        console.log(this.props.name)
+    }
        
     render() {
-        const divStyle = {
-            alignItems: 'left',
-            marginLeft: '50px',
-            width: '100%'
-        }
-
         return (
-            <Navbar expand="lg" id="rbNavbar">
-                <Navbar.Brand href="#home" className="text-white">
-                <img src={Logo} alt="logo" id="logo" />
-                Amazon
+            <Navbar id="rbNavbar" expand="lg">
+                <Navbar.Brand href="/">
+                    <img src={Logo} alt='logo' width='50' />Amazon
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <div className="flex-column" style={divStyle}>
-                        <div className="input-group w-75">
-                        <input id="searchInput" type="text" name="search" className="form-control" onKeyUp={this.search} 
-                            onChange={this.search} value={this.state.searchTerm} />
-                        <span id="searchBtn" name="searchBtn" className="bg-warning" onClick={this.search}>
-                            <FontAwesomeIcon icon={faSearch} />
-                        </span>
-                        </div>
-                        <div className="w-75">
-                        <ul className="navbar-nav">
-                            <li className="nav-item">
-                            <NavLink onClick={this.collapse} to='categories' activeClassName='active' 
-                                className="nav-link text-white">Categories</NavLink>
-                            </li>
-                            <li className='nav-item ml-0 ml-md-auto' id="dropDown">
-                            <FontAwesomeIcon icon={faUser} />
-                            <NavDropdown title={!this.token ? 'Account' : null} id="basic-nav-dropdown">
-                                <NavDropdown.Item href="#action/3.1">Account</NavDropdown.Item>
-                            </NavDropdown>
-                            </li>
-                        </ul>
-                        </div>
-                    </div>
+                    <Nav className="mr-auto ml-5">
+                        <Nav.Link href="/categories">Categories</Nav.Link>
+                            {
+                                this.props.name ? <NavDropdown title={this.props.name} id="basic-nav-dropdown">
+                                            <NavDropdown.Item href="/profile">
+                                                <FontAwesomeIcon icon={faUserAlt} /> Profile
+                                            </NavDropdown.Item>
+                                            <NavDropdown.Item href="/logout">
+                                                <FontAwesomeIcon icon={faKey} /> Logout
+                                            </NavDropdown.Item>
+                                        </NavDropdown> :
+                                <Nav.Link href="/login">
+                                    Login
+                                </Nav.Link>
+                            }
+                        <Nav.Link href="/cart">
+                            <FontAwesomeIcon icon={faCartPlus} /> Cart
+                        </Nav.Link>
+                    </Nav>
+                    <Form inline>
+                        <FormControl type="search" placeholder="Search" id="searchInput" />
+                        <Button variant="success" id="searchBtn">Search</Button>
+                    </Form>
                 </Navbar.Collapse>
             </Navbar>
         );
     }
 }
 
-export default NavBar;
+const mapStateToProps = state => {
+    return {
+        name: state.loggedUserReducer.personalDetails.name,
+        token: state.loginReducer.token,
+    };
+}
+
+export default connect(mapStateToProps)(NavBar);

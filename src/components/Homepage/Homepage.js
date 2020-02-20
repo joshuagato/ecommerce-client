@@ -4,19 +4,14 @@ import './Homepage.scss';
 import { connect } from 'react-redux';
 
 import Auxil from '../Hoc/Auxil';
-import Navbar from '../NavBar/NavBar';
 import Banner from '../Banner/Banner';
-import Footer from '../Footer/Footer';
 
 class Homepage extends Component {
   render() {
-    console.log("BTN", this.props.btnDisabled)
     return (
       <Auxil>
-        <Navbar />
         <Banner />
         
-        <Footer />
       </Auxil>
     );
   }

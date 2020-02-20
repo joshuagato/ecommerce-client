@@ -1,0 +1,9 @@
+#settings {
+    background-color: azure;
+
+    h4 {
+        @media(max-width: 575.98px) {
+            font-size: xx-large;
+        }
+    }
+}

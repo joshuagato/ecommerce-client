@@ -12,12 +12,16 @@ import thunk from 'redux-thunk';
 
 import regisReducer from './store/reducers/registration';
 import loginReducer from './store/reducers/login';
+import updateReducer from './store/reducers/update-details';
+import loggedUserReducer from './store/reducers/logged-in-user-details';
 
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
 const rootReducer = combineReducers({
     regisReducer: regisReducer,
-    loginReducer: loginReducer
+    loginReducer: loginReducer,
+    updateReducer: updateReducer,
+    loggedUserReducer: loggedUserReducer
 });
 
 const reduxStore = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
