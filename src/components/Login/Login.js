@@ -30,6 +30,10 @@ export class Login extends Component {
         this.props.onLogin(this.state.email, this.state.password);
     }
 
+    componentDidMount() {
+        this.props.disableLoginButton();
+    }
+
     componentDidUpdate() {
         const state = this.state;
 
@@ -96,7 +100,8 @@ export class Login extends Component {
 
 const mapStateToProps = state => {
     return {
-        loggedIn: state.loginReducer.name !== null && state.loginReducer.token !== null,
+        loggedIn: state.loggedUserReducer.personalDetails.name !== null && 
+            state.loggedUserReducer.personalDetails.token !== null,
         name: state.loginReducer.name,
         token: state.loginReducer.token,
         loading: state.loginReducer.loading,

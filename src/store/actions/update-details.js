@@ -8,11 +8,12 @@ const updateStart = () => {
     };
 }
 
-const updateSuccess = response => {
+const updateSuccess = (response, message) => {
     return {
         type: actionTypes.UPDATE_SUCCESS,
-        message: response.message,
-        details: response.userDetails
+        message: message,
+        user: response.user,
+        token: response.token
     };
 }
 
@@ -34,49 +35,47 @@ export const updateDetails = userInput => {
     return dispatch => {
         dispatch(updateStart());
 
-            const requestInput = {
-                name: userInput.name,
-                email: userInput.email,
-                password: userInput.password,
-                isSeller: userInput.isSeller
+        const requestInput = {
+            name: userInput.name,
+            email: userInput.email,
+            password: userInput.password,
+            isSeller: userInput.isSeller
+        }
+        
+        const axiosHeaders = {
+            headers: {
+                Authorization: userInput.token,
+                'Content-Type': 'application/json'
             }
+        };
+
+        axios.post(process.env.REACT_APP_UPDATE_DETAILS_URL, requestInput, axiosHeaders).then(response => {
+            const postResponse = response.data;
             
-            const axiosHeaders = {
-                headers: {
-                    Authorization: userInput.token,
-                    'Content-Type': 'application/json'
-                }
-            };
+            if(response.data.success) {
+                axios.get(process.env.REACT_APP_UPDATE_DETAILS_URL, axiosHeaders).then(response => {
 
-            // console.log(userInput.token);
-
-            axios.post(process.env.REACT_APP_UPDATE_DETAILS_URL, requestInput, axiosHeaders).then(response => {
-                
-                if(response.data.success) {
-
-                    axios.get(process.env.REACT_APP_UPDATE_DETAILS_URL, axiosHeaders).then(response => {
-
-                        const res = response.data;
+                    const getResponse = response.data;
+                    if(getResponse.success) {
+                        dispatch(updateSuccess(getResponse, postResponse.message));
                         
-                        if(res.success) {
-                            dispatch(updateSuccess(res));
-                            localStorage.setItem('name', res.userDetails.name);
-                            localStorage.setItem('email', res.userDetails.email);
-                            localStorage.setItem('isSeller', res.userDetails.isSeller);
-                            localStorage.setItem('token', res.userDetails.token);
-                        } else  
-                            dispatch(updateSuccessWithWarning(res.message))
-                    })
-                    .catch(error => {
-
-                    });
-                }
-                
-            })
-            .catch(error => {
-                console.log(error);
-                dispatch(updateFailure(error.response));
-            });
+                        localStorage.setItem('name', getResponse.user.name);
+                        localStorage.setItem('email', getResponse.user.email);
+                        localStorage.setItem('isSeller', getResponse.user.isSeller);
+                        localStorage.setItem('token', getResponse.token);
+                    } else  
+                        dispatch(updateSuccessWithWarning(postResponse.message))
+                })
+                .catch(error => {
+                    console.log(error);
+                    dispatch(updateFailure(error.response))
+                });
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            dispatch(updateFailure(error.response));
+        });
     };
 }
 // End of actions for details update

@@ -40,7 +40,7 @@ export class NavBar extends Component {
     }
 
     componentDidUpdate() {
-        console.log(this.props.name)
+        // console.log(this.props.name)
     }
        
     render() {

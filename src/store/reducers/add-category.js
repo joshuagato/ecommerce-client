@@ -10,27 +10,27 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch(action.type) {
 
-        case actionTypes.ENABLE_REGISTER:
+        case actionTypes.ENABLE_ADD_CATEGORY:
             return { ...state, btnDisabled: false };
 
-        case actionTypes.DISABLE_REGISTER:
+        case actionTypes.DISABLE_ADD_CATEGORY:
             return { ...state, btnDisabled: true };
 
-        case actionTypes.REG_START:
+        case actionTypes.ADD_CATEGORY_START:
             return { ...state, loading: true };
 
-        case actionTypes.REG_SUCCESS:
+        case actionTypes.ADD_CATEGORY_SUCCESS:
             return { ...state, loading: false, successMessage: action.message, failureMessage: '' };
 
-        case actionTypes.REG_SUCCESS_WITH_WARNING:
+        case actionTypes.ADD_CATEGORY_SUCCESS_WITH_WARNING:
             return { ...state, loading: false, successMessage: '', failureMessage: action.message };
 
-        case actionTypes.REG_FAILURE:
+        case actionTypes.ADD_CATEGORY_FAILURE:
             return { ...state, loading: false, failureMessage: action.message, successMessage: '' };
 
         case actionTypes.LOGOUT:
             return { ...state, loading: false, failureMessage: '', successMessage: '', btnDisabled: true };
-            
+
         default: return state;
     }
 }

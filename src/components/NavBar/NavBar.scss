@@ -25,10 +25,12 @@
 
 .dropdown-menu {
     background-color: #232f3e !important;
+    border: none !important;
 
     .dropdown-item {
         &:hover {
-            background-color: #285c39 !important;
+            // background-color: #285c39 !important;
+            background-color: transparent !important;
         }
     }
 }

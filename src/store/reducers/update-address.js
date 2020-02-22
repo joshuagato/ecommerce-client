@@ -8,16 +8,16 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch(action.type) {
-        case actionTypes.UPDATE_START:
+        case actionTypes.UPDATE_ADDRESS_START:
             return { ...state, loading: true };
-            
-        case actionTypes.UPDATE_SUCCESS:
+
+        case actionTypes.UPDATE_ADDRESS_SUCCESS:
             return { ...state, loading: false, successMessage: action.message, failureMessage: '' };
 
-        case actionTypes.UPDATE_SUCCESS_WITH_WARNING:
+        case actionTypes.UPDATE_ADDRESS_SUCCESS_WITH_WARNING:
             return { ...state, loading: false, successMessage: '', failureMessage: action.message };
-                    
-        case actionTypes.UPDATE_FAILURE:
+
+        case actionTypes.UPDATE_ADDRESS_FAILURE:
             return { ...state, loading: false, successMessage: '', failureMessage: action.message };
 
         case actionTypes.LOGOUT:

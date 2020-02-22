@@ -14,6 +14,7 @@ import Logout from './components/Logout/Logout';
 import Profile from './components/Profile/Profile';
 import Settings from './components/Profile/Settings/Settings';
 import Address from './components/Profile/Address/Address';
+import Categories from './components/Categories/Categories';
 import Error404 from './components/Error404/Error404';
 
 class App extends Component {
@@ -28,6 +29,7 @@ class App extends Component {
             <Route path='/profile' exact component={Profile} />
             <Route path='/profile/settings' exact component={Settings} />
             <Route path='/profile/address' exact component={Address} />
+            <Route path='/categories' exact component={Categories} />
             <Route path='/' exact component={Homepage} />
             <Route component={Error404} />
           </Switch>

@@ -8,17 +8,11 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 
 export class Profile extends Component {
-
-    state = {
-        user: 'Joshua Gato'
-    }
-
     render() {
-        const { name, email, isSeller, token } = this.props;
-
+        const { name, email, token } = this.props;
         return (
             <Auxil>
-                { name && email && isSeller && token ?
+                { name && email && token ?
                     <section id="profile">
                         <div className="container px-3 py-4">
                             <h4 className="display-4">My Profile</h4>
@@ -70,10 +64,10 @@ export class Profile extends Component {
 
 const mapStateToProps = state => {
     return {
-        name: state.loginReducer.name,
-        email: state.loginReducer.email,
-        isSeller: state.loginReducer.isSeller,
-        token: state.loginReducer.token
+        name: state.loggedUserReducer.personalDetails.name,
+        email: state.loggedUserReducer.personalDetails.email,
+        isSeller: state.loggedUserReducer.personalDetails.isSeller,
+        token: state.loggedUserReducer.personalDetails.token
     };
 }
 

@@ -13,7 +13,9 @@ import thunk from 'redux-thunk';
 import regisReducer from './store/reducers/registration';
 import loginReducer from './store/reducers/login';
 import updateReducer from './store/reducers/update-details';
+import updateAddressReducer from './store/reducers/update-address';
 import loggedUserReducer from './store/reducers/logged-in-user-details';
+import addCategoryReducer from './store/reducers/add-category';
 
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
@@ -21,7 +23,9 @@ const rootReducer = combineReducers({
     regisReducer: regisReducer,
     loginReducer: loginReducer,
     updateReducer: updateReducer,
-    loggedUserReducer: loggedUserReducer
+    loggedUserReducer: loggedUserReducer,
+    updateAddressReducer: updateAddressReducer,
+    addCategoryReducer: addCategoryReducer
 });
 
 const reduxStore = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));

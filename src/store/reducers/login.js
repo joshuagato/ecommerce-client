@@ -22,24 +22,15 @@ const reducer = (state = initialState, action) => {
         case actionTypes.LOGIN_SUCCESS:
             return { ...state, loading: false, token: action.token, successMessage: action.message, failureMessage: '' };
 
-        case actionTypes.UPDATE_SUCCESS:
-            return { ...state, loading: false, name: action.details.name, email: action.details.email, 
-                        isSeller: action.details.isSeller, token: action.details.token, 
-                            successMessage: action.message, failureMessage: '' };
-
         case actionTypes.LOGIN_SUCCESS_WITH_WARNING:
-            return { ...state, name: '', token: '', loading: false, failureMessage: action.message, successMessage: '' };
-            
-        case actionTypes.UPDATE_SUCCESS_WITH_WARNING:
-            return { ...state, name: '', token: '', loading: false, failureMessage: action.message, successMessage: '' };
+            return { ...state, loading: false, failureMessage: action.message, successMessage: '' };
 
         case actionTypes.LOGIN_FAILURE:
-            return { ...state, name: '', email: '', token: '', loading: false, failureMessage: action.message, 
+            return { ...state, loading: false, failureMessage: action.message, 
                 successMessage: '' };
 
         case actionTypes.LOGOUT:
-            return { ...state, name: '', email: '', token: '', loading: false, failureMessage: '', 
-                successMessage: '' };
+            return { ...state, loading: false, failureMessage: '', successMessage: '' };
 
         default: return state;
     }

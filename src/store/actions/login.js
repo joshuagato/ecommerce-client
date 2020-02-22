@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import { getLoggedInUserDetails } from '../actions/index';
+import { getLoggedInUserDetails, getLoggedInUserAddress } from '../actions/index';
 import axios from 'axios';
 
 // Actions for enabling/disabling the login button
@@ -59,6 +59,7 @@ export const login = (email, password) => {
             if(response.data.success) {
                 dispatch(loginSuccess(response.data));
                 dispatch(getLoggedInUserDetails(response.data.token));
+                dispatch(getLoggedInUserAddress(response.data.token));
                 localStorage.setItem('token', response.data.token);
             } else  
                 dispatch(loginSuccessWithWarning(response.data.message))
@@ -76,6 +77,12 @@ export const logout = () => {
     localStorage.removeItem('email');
     localStorage.removeItem('token');
     localStorage.removeItem('isSeller');
+    localStorage.removeItem('addr1');
+    localStorage.removeItem('addr2');
+    localStorage.removeItem('city');
+    localStorage.removeItem('country');
+    localStorage.removeItem('postalCode');
+    localStorage.removeItem('state');
 
     return {
         type: actionTypes.LOGOUT

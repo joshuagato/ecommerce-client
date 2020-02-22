@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Registration.scss';
 
+import { Redirect } from 'react-router-dom';
 import { Alert } from 'reactstrap';
 import Spinner from 'react-bootstrap/Spinner';
 import Auxil from '../Hoc/Auxil';
@@ -52,8 +53,12 @@ class Registration extends Component {
     }
 
     render() {
+        let redirectPage;
+        if (this.props.loggedIn) redirectPage = <Redirect to='/' />
+        
         return (
             <section id="registrationPage">
+                { redirectPage }
                 <div className="container p-5">
                     <div className="row mt-5">
                         <div className="col-lg-5 mx-auto">
@@ -97,7 +102,7 @@ class Registration extends Component {
                                             </label>
                                         </div>
                                         <hr />
-                                        <button type="submit" className="btn btn-primary btn-block" 
+                                        <button type="submit" className="btn btn-success btn-block" 
                                             id="registerBtn" disabled={this.props.btnDisabled}>
                                             {
                                                 this.props.loading ?
@@ -122,6 +127,8 @@ class Registration extends Component {
 
 const mapStateToProps = state => {
     return {
+        loggedIn: state.loggedUserReducer.personalDetails.name !== null && 
+            state.loggedUserReducer.personalDetails.token !== null,
         btnDisabled: state.regisReducer.btnDisabled,
         loading: state.regisReducer.loading,
         successMessage: state.regisReducer.successMessage,

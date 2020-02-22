@@ -52,14 +52,13 @@ export class Settings extends Component {
 
         return (
             <Auxil>
-                {name && email && isSeller && token ? 
+                {name && email && token ? 
                     <section id="settings">
                         <div className="container-fluid p-5">
                             <div className="row">
                                 <div className="col-lg-6 mx-auto">
                                     <h4 className="display-4">My Account Settings</h4>
                                     <hr />
-                                    
                                         {
                                             this.props.successMessage || this.props.failureMessage ? 
                                                 <Alert color={this.props.successMessage ? 'success' : 'danger'}>
@@ -73,18 +72,18 @@ export class Settings extends Component {
                                                 <div className="form-group">
                                                     <label htmlFor="name" className="form-control-label">Name</label>
                                                     <input id="name" type="text" name="name" className="form-control" 
-                                                        onChange={this.inputHandler} defaultValue={this.props.name} />
+                                                        onChange={this.inputHandler} defaultValue={name} />
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="email" className="form-control-label">Email</label>
                                                     <input id="email" type="email" name="email" className="form-control" 
-                                                        onChange={this.inputHandler} defaultValue={this.props.email} />
+                                                        onChange={this.inputHandler} defaultValue={email} />
                                                 </div>
                                                 <div className="form-check mb-3">
                                                     <label className="form-check-label">
                                                         <input type="checkbox" name="isSeller" 
                                                             onChange={this.inputHandler}
-                                                                defaultChecked={this.toBoolean(this.props.isSeller)}
+                                                                defaultChecked={this.toBoolean(isSeller)}
                                                                     className="form-check-input" />
                                                         Is Seller
                                                     </label>
@@ -131,19 +130,19 @@ export class Settings extends Component {
 
 const mapStateToProps = state => {
     return {
-        name: state.loginReducer.name,
-        email: state.loginReducer.email,
-        isSeller: state.loginReducer.isSeller,
-        token: state.loginReducer.token,
+        name: state.loggedUserReducer.personalDetails.name,
+        email: state.loggedUserReducer.personalDetails.email,
+        isSeller: state.loggedUserReducer.personalDetails.isSeller,
+        token: state.loggedUserReducer.personalDetails.token,
         loading: state.updateReducer.loading,
-        successMessage: state.regisReducer.successMessage,
-        failureMessage: state.regisReducer.failureMessage
+        successMessage: state.updateReducer.successMessage,
+        failureMessage: state.updateReducer.failureMessage
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onUpdateDetails: (input) => dispatch(actions.updateDetails(input))
+        onUpdateDetails: input => dispatch(actions.updateDetails(input))
     };
 }
 
