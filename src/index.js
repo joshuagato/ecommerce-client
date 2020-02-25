@@ -17,6 +17,7 @@ import updateAddressReducer from './store/reducers/update-address';
 import loggedUserReducer from './store/reducers/logged-in-user-details';
 import addCategoryReducer from './store/reducers/add-category';
 import addProductReducer from './store/reducers/add-product';
+import productsReducer from './store/reducers/products';
 
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
     loggedUserReducer: loggedUserReducer,
     updateAddressReducer: updateAddressReducer,
     addCategoryReducer: addCategoryReducer,
-    addProductReducer: addProductReducer
+    addProductReducer: addProductReducer,
+    productsReducer: productsReducer
 });
 
 const reduxStore = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));

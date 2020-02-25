@@ -34,11 +34,15 @@ export class PostProduct extends Component {
 
   componentDidUpdate() {
     const state = this.state;
-
+    
     if(state.title && state.price && state.categoryId && state.description && state.product_picture)
       this.props.enableAddProductButton();
     else
       this.props.disableAddProductButton();
+    // if (this.props.successMessage && !this.props.btnDisabled) {
+    //   console.log("INSIDE")
+    //   this.setState({ title: '', price: 0, categoryId: '', description: '', product_picture: '' });
+    // }
   }
 
   inputHandler = event => {

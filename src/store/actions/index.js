@@ -5,3 +5,4 @@ export { getLoggedInUserDetails, getLoggedInUserAddress } from './logged-in-user
 export { updateAddress } from './update-address';
 export { addCategory, enableAddCategoryButton, disableAddCategoryButton, fetchCategories } from './add-category';
 export { enableAddProductButton, disableAddProductButton, addProduct } from './add-product';
+export { fetchProducts } from './products';

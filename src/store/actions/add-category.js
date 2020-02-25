@@ -53,17 +53,9 @@ const populateCategories = categories => {
   };
 }
 export const fetchCategories = () => {
-  return (dispatch, getState) => {
+  return dispatch => {
 
-    const { token } = getState().loggedUserReducer.personalDetails.token;
-    const axiosHeaders = {
-      headers: {
-        Authorization: token,
-        'Content-Type': 'application/json'
-      }
-    }
-
-    axios.get(process.env.REACT_APP_CATEGORIES_URL, axiosHeaders).then(response => {
+    axios.get(process.env.REACT_APP_CATEGORIES_URL).then(response => {
       dispatch(populateCategories(response.data.categories));
 
       localStorage.setItem('categories', JSON.stringify(response.data.categories));

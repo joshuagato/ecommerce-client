@@ -1,20 +1,20 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    personalDetails: {
-        name: '' || localStorage.getItem('name'),
-        email: '' || localStorage.getItem('email'),
-        isSeller: '' || localStorage.getItem('isSeller'),
-        token: '' || localStorage.getItem('token')
-    },
-    shippingAddress: {
-        addr1: '' || localStorage.getItem('addr1'),
-        addr2: '' || localStorage.getItem('addr2'),
-        city: '' || localStorage.getItem('city'),
-        state: '' || localStorage.getItem('state'),
-        country: '' || localStorage.getItem('country'),
-        postalCode: '' || localStorage.getItem('postalCode')
-    }
+  personalDetails: {
+    name: '' || localStorage.getItem('name'),
+    email: '' || localStorage.getItem('email'),
+    isSeller: '' || localStorage.getItem('isSeller'),
+    token: '' || localStorage.getItem('token')
+  },
+  shippingAddress: {
+    addr1: '' || localStorage.getItem('addr1'),
+    addr2: '' || localStorage.getItem('addr2'),
+    city: '' || localStorage.getItem('city'),
+    state: '' || localStorage.getItem('state'),
+    country: '' || localStorage.getItem('country'),
+    postalCode: '' || localStorage.getItem('postalCode')
+  }
 }
 
 const reducer = (state = initialState, action) => {
