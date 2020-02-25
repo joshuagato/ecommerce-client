@@ -1,36 +1,36 @@
 #rbNavbar {
-    background-color: #232f3e;
+  background-color: #232f3e;
 
-    .nav-link, .navbar-brand, .dropdown-item {
-        color: #bbbbbb !important;
-        transition: color ease-out 0.5s;
+  .nav-link, .navbar-brand, .dropdown-item {
+    color: #bbbbbb !important;
+    transition: color ease-out 0.5s;
 
-        &:hover {
-            color: #fff !important;
-        }
-    }    
+    &:hover {
+      color: #fff !important;
+    }
+  }    
 }
 
 #searchInput {
-    outline: none;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+  outline: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 #searchBtn {
-    cursor: pointer;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+  cursor: pointer;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .dropdown-menu {
-    background-color: #232f3e !important;
-    border: none !important;
+  background-color: #232f3e !important;
+  border: none !important;
 
-    .dropdown-item {
-        &:hover {
-            // background-color: #285c39 !important;
-            background-color: transparent !important;
-        }
+  .dropdown-item {
+    &:hover {
+      // background-color: #285c39 !important;
+      background-color: transparent !important;
     }
+  }
 }

@@ -47,7 +47,7 @@ export class Address extends Component {
         return (
             <Auxil>
                 {addr1 && addr2 && country && postalCode && state ?
-                    <section id="address">
+                    <section id="address" className="addBg">
                         <div className="container p-5">
                             <div className="row">
                                 <div className="col-lg-6 mx-auto">

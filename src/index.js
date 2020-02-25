@@ -16,6 +16,7 @@ import updateReducer from './store/reducers/update-details';
 import updateAddressReducer from './store/reducers/update-address';
 import loggedUserReducer from './store/reducers/logged-in-user-details';
 import addCategoryReducer from './store/reducers/add-category';
+import addProductReducer from './store/reducers/add-product';
 
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
@@ -25,17 +26,18 @@ const rootReducer = combineReducers({
     updateReducer: updateReducer,
     loggedUserReducer: loggedUserReducer,
     updateAddressReducer: updateAddressReducer,
-    addCategoryReducer: addCategoryReducer
+    addCategoryReducer: addCategoryReducer,
+    addProductReducer: addProductReducer
 });
 
 const reduxStore = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 
 const app = (
-    <Provider store={reduxStore}>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
-    </Provider>
+  <Provider store={reduxStore}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+  </Provider>
 );
 
 ReactDOM.render(app, document.getElementById('root'));

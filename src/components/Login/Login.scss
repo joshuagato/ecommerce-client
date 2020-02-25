@@ -1,9 +1,0 @@
-#loginPage {
-    background-color: azure;
-}
-
-#loginBtn {
-    &:disabled {
-        cursor: not-allowed;
-    }
-}

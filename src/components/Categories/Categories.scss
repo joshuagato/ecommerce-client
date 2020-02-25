@@ -1,16 +1,14 @@
 #categories {
-    background-color: azure;
-
     h4 {
-        @media(max-width: 575.98px) {
-            font-size: xx-large;
-        }
+      @media(max-width: 575.98px) {
+        font-size: xx-large;
+      }
     }
 
     h4.card-title {
-        @media(max-width: 575.98px) {
-            font-weight: bold;
-            font-size: x-large;
-        }
+      @media(max-width: 575.98px) {
+        font-weight: bold;
+        font-size: x-large;
+      }
     }
 }

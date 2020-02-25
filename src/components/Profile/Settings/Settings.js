@@ -53,7 +53,7 @@ export class Settings extends Component {
         return (
             <Auxil>
                 {name && email && token ? 
-                    <section id="settings">
+                    <section id="settings" className="addBg">
                         <div className="container-fluid p-5">
                             <div className="row">
                                 <div className="col-lg-6 mx-auto">

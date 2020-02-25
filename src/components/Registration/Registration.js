@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './Registration.scss';
 
 import { Redirect } from 'react-router-dom';
 import { Alert } from 'reactstrap';
@@ -57,7 +56,7 @@ class Registration extends Component {
         if (this.props.loggedIn) redirectPage = <Redirect to='/' />
         
         return (
-            <section id="registrationPage">
+            <section className="addBg">
                 { redirectPage }
                 <div className="container p-5">
                     <div className="row mt-5">
@@ -102,8 +101,8 @@ class Registration extends Component {
                                             </label>
                                         </div>
                                         <hr />
-                                        <button type="submit" className="btn btn-success btn-block" 
-                                            id="registerBtn" disabled={this.props.btnDisabled}>
+                                        <button type="submit" className="btn btn-success btn-block submitBtn" 
+                                          disabled={this.props.btnDisabled}>
                                             {
                                                 this.props.loading ?
                                                     <Auxil>

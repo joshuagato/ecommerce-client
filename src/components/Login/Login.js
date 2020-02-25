@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './Login.scss';
 
 import { Redirect } from 'react-router-dom';
 import { Alert } from 'reactstrap';
@@ -46,7 +45,7 @@ export class Login extends Component {
         if (this.props.loggedIn) redirectPage = <Redirect to='/' />
 
         return (
-            <section id="loginPage">
+            <section className="addBg">
                 { redirectPage }
                 <div className="container p-5">
                     <div className="row mt-5">
@@ -74,8 +73,8 @@ export class Login extends Component {
                                                 value={this.state.password} onChange={this.formInputHandler} />
                                         </div>
                                         <hr />
-                                        <button type="submit" className="btn btn-success btn-block" 
-                                            id="loginBtn" disabled={this.props.btnDisabled}>
+                                        <button type="submit" className="btn btn-success btn-block submitBtn" 
+                                          disabled={this.props.btnDisabled}>
                                             {
                                                 this.props.loading ?
                                                 <Auxil>
