@@ -4,14 +4,15 @@ import './Homepage.scss';
 import { connect } from 'react-redux';
 
 import Auxil from '../Hoc/Auxil';
-import Banner from '../Banner/Banner';
+import Banner from './Banner/Banner';
+import AllProducts from './AllProducts/AllProducts';
 
 class Homepage extends Component {
   render() {
     return (
       <Auxil>
         <Banner />
-        
+        <AllProducts />
       </Auxil>
     );
   }

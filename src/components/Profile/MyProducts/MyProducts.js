@@ -17,8 +17,9 @@ export class MyProducts extends Component {
     const { products } = this.props;
     return (
       <Auxil>
-        {products ?
-          <section id="myProducts">
+        {/* {products ? */}
+        {products.length ?
+          <section id="myProducts" className="addBg">
             <div className="container p-5">
               <div className="row">
                 {products && !products.length ?
@@ -39,21 +40,21 @@ export class MyProducts extends Component {
                         <div key={product._id} className="product">
                           <div className="row">
                             <div className="col-4 col-md-2">
-                              <NavLink to={`/product/${product._id}`}>
+                              <NavLink to={`/products/${product._id}`}>
                                 <img src={process.env.REACT_APP_PRODUCT_PICTURES_URL + product.image}
                                   alt="img" className="img-fluid img-thumbnail" />
                               </NavLink>
                             </div>
                             <div className="col-5 col-md-8">
                               <h5>
-                                <NavLink to={'/product/' + product._id}>{product.title}</NavLink>
+                                <NavLink to={'/products/' + product._id}>{product.title}</NavLink>
                                 <p className="m-0">
                                   <small className="text-muted">{product.category.name}</small>
                                 </p>
                               </h5>
                             </div>
                             <div className="col-2">
-                              <h6 className="font-weight-bold text-danger">GHC{product.price}</h6>
+                              <h6 className="font-weight-bold text-danger">${product.price}</h6>
                             </div>
                           </div>
                           <hr />

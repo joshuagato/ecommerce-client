@@ -39,10 +39,9 @@ export class PostProduct extends Component {
       this.props.enableAddProductButton();
     else
       this.props.disableAddProductButton();
-    // if (this.props.successMessage && !this.props.btnDisabled) {
-    //   console.log("INSIDE")
-    //   this.setState({ title: '', price: 0, categoryId: '', description: '', product_picture: '' });
-    // }
+      
+    if (this.props.successMessage && !this.props.btnDisabled) 
+      this.setState({ title: '', price: 0, categoryId: '', description: '', product_picture: '' });
   }
 
   inputHandler = event => {
@@ -93,17 +92,17 @@ export class PostProduct extends Component {
                         <div className="form-group">
                           <label htmlFor="title" className="form-control-label">Title</label>
                           <input id="title" type="text" name="title" className="form-control" 
-                            onChange={this.inputHandler} defaultValue={this.state.title} />
+                            onChange={this.inputHandler} value={this.state.title} />
                         </div>
                         <div className="form-group">
                           <label htmlFor="price" className="form-control-label">Price</label>
                           <input id="price" type="number" name="price" className="form-control" 
-                            onChange={this.inputHandler} defaultValue={this.state.price} step={0.01} />
+                            onChange={this.inputHandler} value={this.state.price} step={0.01} />
                         </div>
                         <div className="form-group">
                           <label htmlFor="categoryId" className="form-control-label">Category</label>
                           <select id="categoryId" name="categoryId" className="custom-select"
-                            defaultValue={this.categoryId} onChange={this.inputHandler} >
+                            value={this.categoryId} onChange={this.inputHandler} >
                             {
                               this.props.categories.map(category => (
                                 <option key={category._id} value={category._id}>
@@ -117,7 +116,7 @@ export class PostProduct extends Component {
                           <label htmlFor="description" className="form-control-label">Description</label>
                           <textarea id="description" type="description" rows="5"
                             name="description" className="form-control" 
-                              onChange={this.inputHandler} defaultValue={this.state.description} 
+                              onChange={this.inputHandler} value={this.state.description} 
                                 style={{ 'resize': 'none' }}>
                           </textarea>
                         </div>

@@ -46,7 +46,6 @@ const addProductFailure = message => {
 }
 
 export const addProduct = inputData => {
-  console.log(inputData);
 
   return (dispatch, getState) => {
     dispatch(addProductStart());
