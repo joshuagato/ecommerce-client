@@ -8,9 +8,9 @@ import Footer from './components/Footer/Footer';
 
 import Auxil from './components/Hoc/Auxil';
 import Homepage from './components/Homepage/Homepage';
-import Registration from './components/Registration/Registration';
-import Login from './components/Login/Login';
-import Logout from './components/Logout/Logout';
+import Registration from './components/Authentication/Registration/Registration';
+import Login from './components/Authentication/Login/Login';
+import Logout from './components/Authentication/Logout/Logout';
 import Profile from './components/Profile/Profile';
 import Settings from './components/Profile/Settings/Settings';
 import Address from './components/Profile/Address/Address';

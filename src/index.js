@@ -36,9 +36,9 @@ const reduxStore = createStore(rootReducer, composeEnhancers(applyMiddleware(thu
 
 const app = (
   <Provider store={reduxStore}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>
 );
 

@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Alert } from 'reactstrap';
 import Spinner from 'react-bootstrap/Spinner';
-import Auxil from '../Hoc/Auxil';
+import Auxil from '../../Hoc/Auxil';
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
+import * as actions from '../../../store/actions/index';
 
 class Registration extends Component {
 
