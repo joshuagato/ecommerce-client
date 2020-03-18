@@ -64,10 +64,7 @@ export const login = (email, password) => {
       } else  
         dispatch(loginSuccessWithWarning(response.data.message))
     })
-    .catch(error => {
-      dispatch(loginFailure(error.response));
-      console.log(error);
-    });
+    .catch(error => dispatch(loginFailure(error.response.data.message)));
   }
 }
 // End of actions for user login

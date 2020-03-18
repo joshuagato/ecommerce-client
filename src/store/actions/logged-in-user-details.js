@@ -26,7 +26,7 @@ export const getLoggedInUserDetails = token => {
         localStorage.setItem('isSeller', response.data.user.isSeller);
         localStorage.setItem('token', response.data.token);
     })
-    .catch(error => console.log(error))
+    .catch(error => console.log(error.response.data.message))
   };
 }
 

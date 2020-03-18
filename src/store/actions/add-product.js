@@ -62,10 +62,7 @@ export const addProduct = inputData => {
       const message = response.data.message;
       response.data.success ? dispatch(addProductSuccess(message)) : dispatch(addProductSuccessWithWarning(message));
     })
-    .catch(error => {
-      console.log(error);
-      dispatch(addProductFailure(error.response));
-    });
+    .catch(error => { dispatch(addProductFailure(error.response.data.message)));
   };
 }
 // End of Actions for adding categories

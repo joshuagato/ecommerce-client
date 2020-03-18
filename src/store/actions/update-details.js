@@ -67,15 +67,11 @@ export const updateDetails = userInput => {
                 dispatch(updateSuccessWithWarning(postResponse.message))
             })
             .catch(error => {
-              console.log(error);
-              dispatch(updateFailure(error.response))
+              dispatch(updateFailure(error.response.data.message))
             });
           }
         })
-        .catch(error => {
-          console.log(error);
-          dispatch(updateFailure(error.response));
-        });
+        .catch(error => dispatch(updateFailure(error.response.data.message)));
     };
 }
 // End of actions for details update

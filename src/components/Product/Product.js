@@ -23,11 +23,11 @@ export class Product extends Component {
   }
 
   componentDidMount() {
-    const categoryId = this.props.match.params.id;
+    const productId = this.props.match.params.id;
 
     // this.setState({ btnDisabled: true });
 
-    axios.get(`${process.env.REACT_APP_GENERAL_PRODUCTS_URL}/${categoryId}`)
+    axios.get(`${process.env.REACT_APP_GENERAL_PRODUCTS_URL}/${productId}`)
     .then(response => this.setState({ product: response.data }))
     .catch(error => this.setState({ failureMessage: error.response }));
   }

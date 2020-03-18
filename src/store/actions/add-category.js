@@ -60,7 +60,7 @@ export const fetchCategories = () => {
 
       localStorage.setItem('categories', JSON.stringify(response.data.categories));
     })
-    .catch(error => console.log(error));
+    .catch(error => console.log(error.response.data.message));
   }
 }
 
@@ -82,10 +82,7 @@ export const addCategory = categoryName => {
       } else
           dispatch(addCategorySuccessWithWarning(message))
     })
-    .catch(error => {
-      console.log(error);
-      dispatch(addCategoryFailure(error.response));
-    });
+    .catch(error => dispatch(addCategoryFailure(error.response.data.message)));
   };
 }
 // End of Actions for adding categories
