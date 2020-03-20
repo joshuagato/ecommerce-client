@@ -82,7 +82,9 @@ export const addCategory = categoryName => {
       } else
           dispatch(addCategorySuccessWithWarning(message))
     })
-    .catch(error => dispatch(addCategoryFailure(error.response.data.message)));
+    .catch(error => {
+		if (error.response) dispatch(addCategoryFailure(error.response.data.message));
+	});
   };
 }
 // End of Actions for adding categories

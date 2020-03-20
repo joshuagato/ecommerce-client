@@ -56,13 +56,15 @@ export const addProduct = inputData => {
       headers: {
         Authorization: token
       }
-    }
+    };
 
     axios.post(process.env.REACT_APP_SELLER_PRODUCTS_URL, inputData, axiosHeaders).then(response => {
       const message = response.data.message;
       response.data.success ? dispatch(addProductSuccess(message)) : dispatch(addProductSuccessWithWarning(message));
     })
-    .catch(error => { dispatch(addProductFailure(error.response.data.message)));
+    .catch(error => {
+        if (error.response) dispatch(addProductFailure(error.response.data.message))
+    });
   };
-}
+};
 // End of Actions for adding categories
