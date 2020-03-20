@@ -60,7 +60,9 @@ export const fetchCategories = () => {
 
       localStorage.setItem('categories', JSON.stringify(response.data.categories));
     })
-    .catch(error => console.log(error.response.data.message));
+    .catch(error => {
+		if (error.response) console.log(error.response.data.message);
+	});
   }
 }
 
