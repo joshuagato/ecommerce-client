@@ -1,12 +1,21 @@
 #rbNavbar {
   background-color: #232f3e;
 
-  .nav-link, .navbar-brand, .dropdown-item {
-    color: #bbbbbb !important;
-    transition: color ease-out 0.5s;
+  .navbar-nav {
+    display: flex !important;
+    align-items: center !important;
+
+    a {
+      margin: 0 0.5rem;
+    }
+  }
+
+  .nav-link {
+    color: #a7b5bb;
+    transition: color ease-in-out 0.5s;
 
     &:hover {
-      color: #fff !important;
+      color: #fff;
     }
   }    
 }
@@ -28,9 +37,9 @@
   border: none !important;
 
   .dropdown-item {
-    &:hover {
-      // background-color: #285c39 !important;
-      background-color: transparent !important;
+    &.active, &:active, &:hover {
+      background: none !important;
     }
   }
 }
+
