@@ -49,7 +49,7 @@ class Product extends Component {
 
       const myReview = this.state.myReview;
 
-      if (myReview.title && myReview.description && myReview.rating !== 0) this.props.enableAddReviewButton();
+      if (myReview.title && myReview.description && myReview.rating) this.props.enableAddReviewButton();
       else this.props.disableAddReviewButton();
     }
 

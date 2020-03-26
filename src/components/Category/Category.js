@@ -93,7 +93,7 @@ export class Category extends Component {
                   </div>
                   <Pagination
                     activePage={this.state.activePage}
-                    itemsCountPerPage={2}
+                    itemsCountPerPage={5}
                     totalItemsCount={state.category.totalProducts}
                     pageRangeDisplayed={5}
                     onChange={this.getProducts.bind(this)}

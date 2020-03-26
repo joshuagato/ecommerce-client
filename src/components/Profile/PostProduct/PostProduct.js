@@ -16,6 +16,7 @@ export class PostProduct extends Component {
     super(props);
 
     this.fileInput = React.createRef();
+    this.postProductRef = React.createRef();
 
     this.state = {
       title: '',
@@ -25,6 +26,12 @@ export class PostProduct extends Component {
       product_picture: ''
     }
   }
+
+  handleScroll = () => {
+    setTimeout(() => {
+      this.postProductRef.current.scrollIntoView({ behavior: 'smooth' })
+    }, 500)
+  };
 
   componentDidMount() {
     this.props.onFetchCategories();    
@@ -40,8 +47,10 @@ export class PostProduct extends Component {
     else
       this.props.disableAddProductButton();
       
-    if (this.props.successMessage && !this.props.btnDisabled) 
+    if (this.props.successMessage && !this.props.btnDisabled) {
       this.setState({ title: '', price: 0, categoryId: '', description: '', product_picture: '' });
+      this.handleScroll();
+    }
   }
 
   inputHandler = event => {
@@ -59,9 +68,9 @@ export class PostProduct extends Component {
     formData.append('categoryId', this.state.categoryId);
     formData.append('description', this.state.description);
     formData.append('product_picture', this.state.product_picture);
-    
+
     this.props.onAddProduct(formData);
-  }
+  };
 
   // However, the label of that input field can be styled as a button...and id to htmlFor must be set for
   // the click the trigger the file select window
@@ -73,7 +82,7 @@ export class PostProduct extends Component {
     return (
       <Auxil>
         {this.props.categories ?
-          <section id="postProduct">
+          <section className="postProduct" ref={this.postProductRef}>
             <div className="container p-5">
               <div className="row">
                 <div className="col-lg-6 mx-auto">
@@ -102,7 +111,7 @@ export class PostProduct extends Component {
                         <div className="form-group">
                           <label htmlFor="categoryId" className="form-control-label">Category</label>
                           <select id="categoryId" name="categoryId" className="custom-select"
-                            value={this.categoryId} onChange={this.inputHandler} >
+                            value={this.state.categoryId} onChange={this.inputHandler} >
                             {
                               this.props.categories.map(category => (
                                 <option key={category._id} value={category._id}>
@@ -131,7 +140,7 @@ export class PostProduct extends Component {
                                 Click to Upload Image</button>
                           {/* </label> */}
                         </div>
-                        <button type="submit" className="btn btn-success btn-block submitBtn" 
+                        <button type="submit" className="btn btn-success btn-block submitBtn"
                           disabled={this.props.btnDisabled}>
                             {
                               this.props.loading ?
