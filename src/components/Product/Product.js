@@ -10,37 +10,57 @@ import { connect } from 'react-redux';
 import * as actions from "../../store/actions";
 
 class Product extends Component {
+  constructor(props) {
+    super(props);
 
-  state = {
-    myReview: {
-      title: '',
-      description: '',
-      rating: 0
-    }
+    this.productDivRef = React.createRef();
+
+    this.state = {
+      myReview: {
+        title: '',
+        description: '',
+        rating: 0
+      }
+    };
   }
 
+  handleScroll = () => {
+    setTimeout(() => {
+      this.productDivRef.current.scrollIntoView({ behavior: 'smooth' })
+    }, 500)
+  };
+
   componentDidMount() {
+    this.props.disableAddReviewButton();
+
     const productId = this.props.match.params.id;
     this.props.populateProduct(productId);
-
-    this.setState({ btnDisabled: true });
 
     axios.get(`${process.env.REACT_APP_GENERAL_PRODUCTS_URL}/${productId}`)
     .then(response => this.setState({ product: response.data }))
     .catch(error => this.setState({ failureMessage: error.response }));
   }
 
-  componentDidUpdate(_, prevState) {
+  componentDidUpdate(prevProps, prevState) {
+    //This first if block could be omitted.
     if (prevState.myReview.title !== this.state.myReview.title ||
       prevState.myReview.description !== this.state.myReview.description ||
       prevState.myReview.rating !== this.state.myReview.rating) {
 
       const myReview = this.state.myReview;
 
-      if (myReview.title && myReview.description && myReview.rating !== 0)
-        this.setState({ btnDisabled: false });
-      else
-        this.setState({ btnDisabled: true });
+      if (myReview.title && myReview.description && myReview.rating !== 0) this.props.enableAddReviewButton();
+      else this.props.disableAddReviewButton();
+    }
+
+    if (this.props.successMessage && !this.props.btnDisabled) {
+      const updatedState = { ...this.state.myReview };
+      updatedState.title = '';
+      updatedState['description'] = '';
+      updatedState.rating = 0;
+
+      this.setState({ myReview: updatedState });
+      this.handleScroll();
     }
   }
 
@@ -58,24 +78,21 @@ class Product extends Component {
       }
     };
 
-
-
     this.props.postReview(myReview, axiosHeaders, productId);
-  }
+  };
 
   ratingChanged = newRating => {
     const updatedReview = { ...this.state.myReview };
     updatedReview.rating = newRating;
     this.setState({ myReview: updatedReview });
-  }
+  };
 
   inputHandler = event => {
     const updatedReview = { ...this.state.myReview };
 
     updatedReview[event.target.name] = event.target.value;
     this.setState({ myReview: updatedReview });
-    
-  }
+  };
 
   render() {
     const myReview = this.state.myReview;
@@ -85,7 +102,7 @@ class Product extends Component {
     return (
       <Auxil>
         {product ?
-          <section id="product" className="addBg">
+          <section id="product" className="addBg" ref={this.productDivRef}>
             <div className="container-fluid p-5">
               {
                 props.successMessage || props.failureMessage ?
@@ -160,19 +177,19 @@ class Product extends Component {
                                 <div className="form-group">
                                   <label htmlFor="title">Title</label>
                                   <input id="title" type="text" name="title" className="form-control"
-                                         onChange={this.inputHandler} />
+                                    value={myReview.title} onChange={this.inputHandler} />
                                 </div>
                                 <div className="form-group">
                                   <label htmlFor="description">Description</label>
                                   <textarea id="description" name="description" onChange={this.inputHandler}
-                                    className="form-control" style={{ 'resize': 'none' }}></textarea>
+                                    className="form-control" style={{ 'resize': 'none' }} value={myReview.description}></textarea>
                                 </div>
                                 <div className="form-group">
                                   <label>Rating</label>
                                   <ReactStars count={5} onChange={this.ratingChanged} size={24}
-                                              name="rating" color2='#ffd700' className='stars' value={myReview.rating}  />
+                                    name="rating" color2='#ffd700' className='stars' value={myReview.rating}  />
                                 </div>
-                                <button type="submit" className="btn btn-info" disabled={this.state.btnDisabled}>
+                                <button type="submit" className="btn btn-info" disabled={this.props.btnDisabled}>
                                   Post Review
                                 </button>
                               </form>
@@ -205,14 +222,17 @@ const mapStateToProps = state => {
     token: state.loggedUserReducer.personalDetails.token,
     product: state.productReducer.product,
     successMessage: state.productReducer.successMessage,
-    failureMessage: state.productReducer.failureMessage
+    failureMessage: state.productReducer.failureMessage,
+    btnDisabled: state.productReducer.btnDisabled
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     populateProduct: productId => dispatch(actions.fetchProduct(productId)),
-    postReview: (review, headers, productId) => dispatch(actions.postReview(review, headers, productId))
+    postReview: (review, headers, productId) => dispatch(actions.postReview(review, headers, productId)),
+    enableAddReviewButton: () => dispatch(actions.enableAddReviewButton()),
+    disableAddReviewButton: () => dispatch(actions.disableAddReviewButton()),
   };
 };
 

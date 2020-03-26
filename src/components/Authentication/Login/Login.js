@@ -6,6 +6,7 @@ import { Alert } from 'reactstrap';
 import Spinner from 'react-bootstrap/Spinner';
 import Auxil from '../../Hoc/Auxil';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import * as actions from '../../../store/actions/index';
 
 export class Login extends Component {
@@ -36,8 +37,10 @@ export class Login extends Component {
   componentDidUpdate() {
     const state = this.state;
 
-    if(state.email && state.password) this.props.enableLoginButton()
-    else this.props.disableLoginButton()
+    if(state.email && state.password) this.props.enableLoginButton();
+    else this.props.disableLoginButton();
+
+    if (this.props.successMessage && !this.props.btnDisabled) this.setState({ email: '', password: '' });
   }
 
   render() {
@@ -62,7 +65,7 @@ export class Login extends Component {
                   <div className="card-body">
                     <h4 className="text-center">Login</h4>
                     <hr />
-                    <form onSubmit={this.loginHandler}>
+                    <form onSubmit={this.loginHandler} className={'mb-3'}>
                       <div className="form-group">
                         <label htmlFor="email">Email</label>
                         <input id="email" type="email" name="email" className="form-control"
@@ -87,7 +90,10 @@ export class Login extends Component {
                         }
                       </button>
                     </form>
-                    <span className="text-center">Register Here</span>
+                    <article className={'text-center'}>
+                      <span>Not registered yet? </span>
+                      <NavLink to='/register' className="text-muted">Signup Here</NavLink>
+                    </article>
                   </div>
                 </div>
               </div>

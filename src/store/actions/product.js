@@ -1,6 +1,20 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
 
+// Actions for enabling/disabling the addReview button
+export const enableAddReviewButton = () => {
+  return {
+    type: actionTypes.ENABLE_ADD_REVIEW
+  };
+}
+
+export const disableAddReviewButton = () => {
+  return {
+    type: actionTypes.DISABLE_ADD_REVIEW
+  };
+}
+// End of Actions for enabling/disabling the addReview button
+
 const populateProduct = product => {
   return {
     type: actionTypes.POPULATE_PRODUCT,
@@ -52,7 +66,6 @@ export const postReview = (review, headers, productId) => {
     dispatch(addReviewStart())
     axios.post(process.env.REACT_APP_PRODUCT_REVIEW_URL, review, headers)
     .then(response => {
-      console.log(response.data);
       dispatch(fetchProduct(productId));
       if(response.data.success) dispatch(addReviewSuccess(response.data.message));
       else dispatch(addReviewSuccessWithWarning(response.data.message));

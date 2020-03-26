@@ -5,16 +5,22 @@ import { Alert } from 'reactstrap';
 import Spinner from 'react-bootstrap/Spinner';
 import Auxil from '../../Hoc/Auxil';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import * as actions from '../../../store/actions/index';
 
 class Registration extends Component {
+    constructor(props) {
+        super(props);
 
-    state = {
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        isSeller: false
+        this.registerRef = React.createRef();
+
+        this.state = {
+          name: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+          isSeller: false
+        };
     }
 
     formInputHandler = event => {
@@ -40,29 +46,45 @@ class Registration extends Component {
         this.props.onRegister(input);
     };
 
+  handleScroll = () => {
+    setTimeout(() => {
+      this.registerRef.current.scrollIntoView({ behavior: 'smooth' })
+    }, 500)
+  };
+
     componentDidMount() {
         this.props.disableRegisterButton();
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps, prevState) {
         const state = this.state;
+        const props = this.props;
 
-        if(state.name && state.email && state.password && state.confirmPassword) this.props.enableRegisterButton()
-        else this.props.disableRegisterButton()
+        if (prevState.name !== state.name || prevState.email || state.email || prevState.password !== state.password
+            || prevState.confirmPassword !== state.confirmPassword || prevProps.successMessage !== props.successMessage) {
+
+          if(state.name && state.email && state.password && state.confirmPassword) this.props.enableRegisterButton();
+          else this.props.disableRegisterButton();
+
+          if (this.props.successMessage && !props.btnDisabled) {
+            this.setState({ name: '', email: '', password: '', confirmPassword: '' });
+            this.handleScroll();
+          }
+        }
     }
 
     render() {
-        let redirectPage;
+      let redirectPage;
         if (this.props.loggedIn) redirectPage = <Redirect to='/' />
         
         return (
-            <section className="addBg">
+            <section className="addBg" ref={this.registerRef}>
                 { redirectPage }
                 <div className="container p-5">
                     <div className="row mt-5">
                         <div className="col-lg-5 mx-auto">
                         {
-                            this.props.successMessage || this.props.failureMessage ? 
+                            this.props.successMessage || this.props.failureMessage ?
                                 <Alert color={this.props.successMessage ? 'success' : 'danger'}>
                                     {this.props.successMessage || this.props.failureMessage}
                                 </Alert> :
@@ -72,36 +94,36 @@ class Registration extends Component {
                                 <div className="card-body">
                                     <h4 className="text-center">Registration</h4>
                                     <hr />
-                                    <form onSubmit={this.register}>
+                                    <form onSubmit={this.register} className={'mb-3'}>
                                         <div className="form-group">
                                             <label htmlFor="name" className="form-control-label">Name</label>
-                                            <input id="name" type="text" name="name" className="form-control" 
+                                            <input id="name" type="text" name="name" className="form-control"
                                                 onChange={this.formInputHandler} value={this.state.name} />
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="email" className="form-control-label">Email</label>
-                                            <input id="email" type="email" name="email" className="form-control" 
+                                            <input id="email" type="email" name="email" className="form-control"
                                                 onChange={this.formInputHandler} value={this.state.email} />
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="password" className="form-control-label">Password</label>
-                                            <input id="password" type="password" name="password" className="form-control" 
+                                            <input id="password" type="password" name="password" className="form-control"
                                                 onChange={this.formInputHandler} value={this.state.password} />
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="confirmPassword" className="form-control-label">Confirm Password</label>
-                                            <input id="confirmPassword" type="password" name="confirmPassword" className="form-control" 
+                                            <input id="confirmPassword" type="password" name="confirmPassword" className="form-control"
                                                 onChange={this.formInputHandler} value={this.state.confirmPassword} />
                                         </div>
                                         <div className="form-check">
                                             <label htmlFor="isSeller" className="form-check-label">
-                                                <input id="isSeller" type="checkbox" name="isSeller" className="form-check-input" 
-                                                    onChange={this.formInputHandler} value={this.state.isSeller} /> 
+                                                <input id="isSeller" type="checkbox" name="isSeller" className="form-check-input"
+                                                    onChange={this.formInputHandler} value={this.state.isSeller} />
                                                     Register as Seller
                                             </label>
                                         </div>
                                         <hr />
-                                        <button type="submit" className="btn btn-success btn-block submitBtn" 
+                                        <button type="submit" className="btn btn-success btn-block submitBtn"
                                           disabled={this.props.btnDisabled}>
                                             {
                                                 this.props.loading ?
@@ -109,11 +131,15 @@ class Registration extends Component {
                                                         <span>Loading</span>
                                                         <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
                                                     </Auxil> :
-                                                    
+
                                                 'Register'
                                             }
                                         </button>
                                     </form>
+                                  <article className={'text-center'}>
+                                    <span>Already registered? </span>
+                                    <NavLink to='/login' className="text-muted">Login Here!</NavLink>
+                                  </article>
                                 </div>
                             </div>
                         </div>

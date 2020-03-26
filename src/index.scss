@@ -4,15 +4,6 @@ $main: #232f3e;
   background-color: $main;
 }
 
-a {
-  cursor: pointer;
-  text-decoration: none;
-
-  &:hover {
-    color: #ffc107;
-  }
-}
-
 button {
   cursor: pointer;
 }
@@ -42,6 +33,10 @@ section {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+a {
+  text-decoration: none !important;
 }
 
 .settingsSpinner {
