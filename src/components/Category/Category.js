@@ -19,7 +19,7 @@ export class Category extends Component {
   }
 
   componentDidMount() {
-    this.getProducts();
+    this.getProducts(this.state.activePage);
   }
 
   getProducts = pageNumber => {
