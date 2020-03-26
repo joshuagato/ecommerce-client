@@ -63,7 +63,7 @@ export const addProduct = inputData => {
       response.data.success ? dispatch(addProductSuccess(message)) : dispatch(addProductSuccessWithWarning(message));
     })
     .catch(error => {
-        if (error.response) dispatch(addProductFailure(error.response.data.message))
+        if (error.response) dispatch(addProductFailure(error.response.data.message));
     });
   };
 };

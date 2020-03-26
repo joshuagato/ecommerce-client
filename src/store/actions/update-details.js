@@ -64,14 +64,16 @@ export const updateDetails = userInput => {
                 localStorage.setItem('isSeller', getResponse.user.isSeller);
                 localStorage.setItem('token', getResponse.token);
               } else  
-                dispatch(updateSuccessWithWarning(postResponse.message))
+                dispatch(updateSuccessWithWarning(postResponse.message));
             })
             .catch(error => {
-              dispatch(updateFailure(error.response.data.message))
+              if (error.response) dispatch(updateFailure(error.response.data.message));
             });
           }
         })
-        .catch(error => dispatch(updateFailure(error.response.data.message)));
+        .catch(error => {
+          if (error.response) dispatch(updateFailure(error.response.data.message));
+        });
     };
 }
 // End of actions for details update

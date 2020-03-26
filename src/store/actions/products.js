@@ -22,7 +22,8 @@ export const fetchProducts = () => {
     axios.get(process.env.REACT_APP_SELLER_PRODUCTS_URL, axiosHeaders).then(response => {
       dispatch(populateProducts(response.data.products));
     })
-    .catch(error => console.log(error.response.data.message));
-
+    .catch(error => {
+      if (error.response) console.log(error.response.data.message);
+    });
   }
 }

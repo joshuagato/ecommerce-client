@@ -20,7 +20,8 @@ class Homepage extends Component {
 
 const mapStateToProps = state => {
   return {
-      btnDisabled: state.regisReducer.btnDisabled
+    loggedIn: state.loggedUserReducer.personalDetails.name !== null && state.loggedUserReducer.personalDetails.token !== null,
+    btnDisabled: state.regisReducer.btnDisabled
   };
 }
 

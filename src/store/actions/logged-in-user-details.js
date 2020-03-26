@@ -56,6 +56,8 @@ export const getLoggedInUserAddress = token => {
         localStorage.setItem('postalCode', response.data.address.postalCode);
         localStorage.setItem('state', response.data.address.state);
       })
-      .catch(error => console.log(error))
+      .catch(error => {
+        if (error.response) console.log(error.response.data.message);
+      })
   };
 }

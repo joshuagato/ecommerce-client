@@ -69,7 +69,9 @@ export const updateAddress = userInput => {
               } else  
                   dispatch(updateAddressSuccessWithWarning(postResponse.message))
             })
-            .catch(error => dispatch(updateAddressFailure(error.response.data.message)));
+            .catch(error => {
+              if (error.response) dispatch(updateAddressFailure(error.response.data.message));
+            });
         }
     })
     .catch(error => dispatch(updateAddressFailure(error.response.data.message)));

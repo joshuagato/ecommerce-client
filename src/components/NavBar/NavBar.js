@@ -14,6 +14,7 @@ import Logo from '../../../src/assets/img/logo.png';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserAlt, faShoppingCart, faKey } from '@fortawesome/free-solid-svg-icons';
+// import * as actions from '../../store/actions/index';
 
 export class NavBar extends Component {
 
@@ -29,7 +30,7 @@ export class NavBar extends Component {
       dropdown.close();
   }
 
-  logout = () => {}
+  logout = () => {};
 
   search = event => {
     this.setState({ searchTerm: event.target.value });
@@ -80,5 +81,11 @@ const mapStateToProps = state => {
     token: state.loginReducer.token,
   };
 }
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     logout: () => dispatch(actions.logout())
+//   };
+// };
 
 export default connect(mapStateToProps)(NavBar);

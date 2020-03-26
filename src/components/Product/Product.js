@@ -5,80 +5,82 @@ import axios from 'axios';
 import { Alert } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-// import ReactStars from 'react-rating-stars-component';
-import StarRatings from 'react-star-ratings';
+import ReactStars from 'react-stars';
+import { connect } from 'react-redux';
+import * as actions from "../../store/actions";
 
-export class Product extends Component {
+class Product extends Component {
 
   state = {
-    product: '',
-    successMessage: '',
-    failureMessage: '',
     myReview: {
       title: '',
       description: '',
-      rating: ''
-    },
-    btnDisabled: true
+      rating: 0
+    }
   }
 
   componentDidMount() {
     const productId = this.props.match.params.id;
+    this.props.populateProduct(productId);
 
-    // this.setState({ btnDisabled: true });
+    this.setState({ btnDisabled: true });
 
     axios.get(`${process.env.REACT_APP_GENERAL_PRODUCTS_URL}/${productId}`)
     .then(response => this.setState({ product: response.data }))
     .catch(error => this.setState({ failureMessage: error.response }));
   }
 
-  componentDidUpdate() {
-    const myReview = this.state.myReview;
+  componentDidUpdate(_, prevState) {
+    if (prevState.myReview.title !== this.state.myReview.title ||
+      prevState.myReview.description !== this.state.myReview.description ||
+      prevState.myReview.rating !== this.state.myReview.rating) {
 
-    console.log(myReview.title)
-    console.log(myReview.description)
-    console.log(myReview.rating)
+      const myReview = this.state.myReview;
 
-    if (myReview.rating) {
-      
+      if (myReview.title && myReview.description && myReview.rating !== 0)
+        this.setState({ btnDisabled: false });
+      else
+        this.setState({ btnDisabled: true });
     }
-
-    if (myReview.title && myReview.description && myReview.rating)
-      this.setState({ btnDisabled: false });
-    // else
-      // this.setState({ btnDisabled: true });
   }
 
-  postReview = () => {
-    this.setState({ btnDisabled: true });
-    
-    axios.post(process.env.REACT_APP_PRODUCT_REVIEW_URL, this.state.myReview)
-    .then(response => this.setState({ successMessage: response.data.message }))
-    .catch(error => this.setState({ failureMessage: error.response }));
+  postReview = event => {
+    event.preventDefault();
+
+    const productId = this.props.match.params.id;
+
+    const myReview = { ...this.state.myReview };
+    myReview.productId = productId;
+
+    const axiosHeaders = {
+      headers: {
+        Authorization: this.props.token
+      }
+    };
+
+
+
+    this.props.postReview(myReview, axiosHeaders, productId);
   }
 
   ratingChanged = newRating => {
-    console.log(newRating);
+    const updatedReview = { ...this.state.myReview };
+    updatedReview.rating = newRating;
+    this.setState({ myReview: updatedReview });
   }
 
-  inputHandler = (event, name) => {
-    console.log(event);
-    if (name) console.log(name)
+  inputHandler = event => {
     const updatedReview = { ...this.state.myReview };
-    
-    if (event.target) {
-      updatedReview[event.target.name] = event.target.value;
-      this.setState({ myReview: updatedReview });
-    } else if (name) {
-      updatedReview['rating'] = event;
-      this.setState({ myReview: updatedReview });
-    }
+
+    updatedReview[event.target.name] = event.target.value;
+    this.setState({ myReview: updatedReview });
     
   }
 
   render() {
-    const state = this.state;
-    const product = this.state.product.product;
+    const myReview = this.state.myReview;
+    const props = this.props;
+    const product = this.props.product;
 
     return (
       <Auxil>
@@ -86,9 +88,9 @@ export class Product extends Component {
           <section id="product" className="addBg">
             <div className="container-fluid p-5">
               {
-                state.successMessage || state.failureMessage ? 
-                  <Alert color={state.successMessage ? 'success' : 'danger'}>
-                    {state.successMessage || state.failureMessage}
+                props.successMessage || props.failureMessage ?
+                  <Alert color={props.successMessage ? 'success' : 'danger'}>
+                    {props.successMessage || props.failureMessage}
                   </Alert> :
                 null
               }
@@ -138,10 +140,8 @@ export class Product extends Component {
                                     alt="poster" className="rounded-circle" />
                                   <p className="lead d-inline ml-3">{review.owner.name}</p>
                                   <br /><br />
-                                  {/* <ReactStars count={5} size={24}
-                                    value={review.rating} color2={'#ffd700'} /> */}
-                                    <StarRatings rating={review.rating} starRatedColor="blue"
-                                      starDimension="24px" numberOfStars={5} name='rating' />
+                                  <ReactStars count={5} size={24}
+                                    value={review.rating} color2={'#ffd700'} />
 
                                   <p className="ml-2 d-inline font-weight-bold">{review.title}</p>
                                   <p className="mt-3">{review.description}</p>
@@ -151,34 +151,35 @@ export class Product extends Component {
                           )) : <p className="text-center text-muted">No reviews yet.</p>
                         : null
                       }
-                      <div className="card bg-light my-5 col-md-8 mx-auto">
-                        <div className="card-body">
-                          <h4 className="card-title">Add a Review</h4>
-                          <hr />
-                          <form className="form" onSubmit={this.postReview}>
-                            <div className="form-group">
-                              <label htmlFor="title">Title</label>
-                              <input id="title" type="text" name="title" className="form-control" 
-                                onChange={this.inputHandler} />
-                            </div>
-                            <div className="form-group">
-                              <label htmlFor="description">Description</label>
-                              <textarea id="description" name="description" onChange={this.inputHandler}
-                               className="form-control" style={{ 'resize': 'none' }}></textarea>
-                            </div>
-                            <div className="form-group">
-                              <label>Rating</label>
-                              {/* <ReactStars count={5} onChange={this.inputHandler} size={24}
-                                name="rating" color2='#ffd700' className='stars' /> */}
-                                <StarRatings starRatedColor="blue" starDimension="24px"
-                                  changeRating={this.inputHandler} numberOfStars={5} name='rating' />
-                            </div>
-                            <button type="submit" className="btn btn-info" disabled={this.state.btnDisabled}>
-                              Post Review
-                            </button>
-                          </form>
-                        </div>
-                      </div>
+                      {this.props.loggedIn ?
+                        <div className="card bg-light my-5 col-md-8 mx-auto">
+                          <div className="card-body">
+                            <h4 className="card-title">Add a Review</h4>
+                            <hr />
+                              <form className="form" onSubmit={this.postReview}>
+                                <div className="form-group">
+                                  <label htmlFor="title">Title</label>
+                                  <input id="title" type="text" name="title" className="form-control"
+                                         onChange={this.inputHandler} />
+                                </div>
+                                <div className="form-group">
+                                  <label htmlFor="description">Description</label>
+                                  <textarea id="description" name="description" onChange={this.inputHandler}
+                                    className="form-control" style={{ 'resize': 'none' }}></textarea>
+                                </div>
+                                <div className="form-group">
+                                  <label>Rating</label>
+                                  <ReactStars count={5} onChange={this.ratingChanged} size={24}
+                                              name="rating" color2='#ffd700' className='stars' value={myReview.rating}  />
+                                </div>
+                                <button type="submit" className="btn btn-info" disabled={this.state.btnDisabled}>
+                                  Post Review
+                                </button>
+                              </form>
+                          </div>
+                        </div>:
+                        <p className={`text-muted text-center lead`}>You can login to add a review</p>
+                      }
                     </div>
                   </div>
                 </div>
@@ -197,4 +198,22 @@ export class Product extends Component {
   }
 }
 
-export default Product;
+const mapStateToProps = state => {
+  return {
+    loggedIn: state.loggedUserReducer.personalDetails.name !== null &&
+      state.loggedUserReducer.personalDetails.token !== null,
+    token: state.loggedUserReducer.personalDetails.token,
+    product: state.productReducer.product,
+    successMessage: state.productReducer.successMessage,
+    failureMessage: state.productReducer.failureMessage
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    populateProduct: productId => dispatch(actions.fetchProduct(productId)),
+    postReview: (review, headers, productId) => dispatch(actions.postReview(review, headers, productId))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Product);

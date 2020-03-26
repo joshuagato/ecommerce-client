@@ -62,9 +62,11 @@ export const login = (email, password) => {
         dispatch(getLoggedInUserAddress(response.data.token));
         localStorage.setItem('token', response.data.token);
       } else  
-        dispatch(loginSuccessWithWarning(response.data.message))
+        dispatch(loginSuccessWithWarning(response.data.message));
     })
-    .catch(error => dispatch(loginFailure(error.response.data.message)));
+    .catch(error => {
+      if (error.response) dispatch(loginFailure(error.response.data.message));
+    });
   }
 }
 // End of actions for user login
