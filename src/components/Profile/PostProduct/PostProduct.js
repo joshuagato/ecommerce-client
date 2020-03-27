@@ -30,7 +30,9 @@ export class PostProduct extends Component {
   handleScroll = () => {
     setTimeout(() => {
       this.postProductRef.current.scrollIntoView({ behavior: 'smooth' })
-    }, 500)
+    }, 500);
+
+    setTimeout(() => this.props.clearsuccessMessage(), 5000);
   };
 
   componentDidMount() {
@@ -41,7 +43,7 @@ export class PostProduct extends Component {
 
   componentDidUpdate() {
     const state = this.state;
-    
+
     if(state.title && state.price && state.categoryId && state.description && state.product_picture)
       this.props.enableAddProductButton();
     else
@@ -184,7 +186,8 @@ const mapDispatchToProps = dispatch => {
     onFetchCategories: () => dispatch(actions.fetchCategories()),
     enableAddProductButton: () => dispatch(actions.enableAddProductButton()), 
     disableAddProductButton: () => dispatch(actions.disableAddProductButton()),
-    onAddProduct: inputData => dispatch(actions.addProduct(inputData))
+    onAddProduct: inputData => dispatch(actions.addProduct(inputData)),
+    clearsuccessMessage: () => dispatch(actions.clearsuccessMessage())
   };
 }
 

@@ -27,6 +27,9 @@ const reducer = (state = initialState, action) => {
     case actionTypes.ADD_PRODUCT_FAILURE:
       return { ...state, loading: false, successMessage: '', failureMessage: action.message };
 
+    case actionTypes.CLEAR_SUCCESS_MESSAGE:
+      return { ...state, loading: false, successMessage: '', failureMessage: '' };
+
     case actionTypes.LOGOUT:
       return { ...state, loading: false, failureMessage: '', successMessage: '', btnDisabled: true };
 

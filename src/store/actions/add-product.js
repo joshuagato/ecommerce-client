@@ -16,6 +16,14 @@ export const disableAddProductButton = () => {
 }
 // End of Actions for enabling/disabling the add-category button
 
+// Start: Clear success message
+export const clearsuccessMessage = () => {
+  return {
+    type: actionTypes.CLEAR_SUCCESS_MESSAGE
+  };
+};
+// End: Clear success message
+
 
 // Actions for adding categories
 const addProductStart = () => {
