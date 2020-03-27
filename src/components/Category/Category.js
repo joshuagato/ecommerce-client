@@ -14,7 +14,6 @@ export class Category extends Component {
     category: '',
     successMessage: '',
     failureMessage: '',
-    page: 1,
     activePage: 1
   }
 
@@ -27,15 +26,17 @@ export class Category extends Component {
 
     axios.get(`${process.env.REACT_APP_CATEGORIES_URL}/${categoryId}?page=${pageNumber - 1}`)
     .then(response => this.setState({ category: response.data, activePage: pageNumber }))
-    .catch(error => this.setState({ failureMessage: error.response }));
+    .catch(error => error.response ? this.setState({ failureMessage: error.response.data.message }) : null );
   }
 
   lower = () => {
-    return 10 * (this.state.page - 1) + 1;
+    // The 5 here should reflect the number specified as perPage in the backend
+    return 5 * (this.state.activePage - 1) + 1;
   }
 
   upper = () => {
-    return Math.min(2 * this.state.page, this.state.category.totalProducts);
+    // The 5 here should reflect the number specified as perPage in the backend
+    return Math.min(5 * this.state.activePage, this.state.category.totalProducts);
   }
 
   render() {
@@ -67,7 +68,7 @@ export class Category extends Component {
                               <div className="col-5 col-md-2">
                                 <NavLink to={`/products/${product._id}`}>
                                   <img src={`${process.env.REACT_APP_PRODUCT_PICTURES_URL}${product.image}`}
-                                    alt="productImage" className="img-fluid img-thmbnail" />
+                                    alt="productImage" className="img-fluid img-thumbnail" />
                                 </NavLink>
                               </div>
                               <div className="col-5 col-md-8">

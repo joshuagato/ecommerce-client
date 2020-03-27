@@ -21,9 +21,9 @@ h5 {
   margin-bottom: 2rem;
 }
 
-section {
-  min-height: 600px;
-}
+//section {
+//  min-height: 600px;
+//}
 
 //svg {
 //  color: #fff;
@@ -63,23 +63,15 @@ a {
   background-color: azure;
 }
 
-.star {
-  position: relative;
-  display: inline-block;
-  font-size: 2rem;
-  color: #d3d3d3;
-}
 
-.full {
-  color: gold;
+// Start: Pagination links editing
+.page-link {
+  &:focus {
+    box-shadow: none !important;
+  }
 }
+//End: Pagination links editing
 
-.half {
-  position: absolute;
-  display: inline-block;
-  overflow: hidden;
-  color: gold;
-}
 
 body {
   margin: 0;

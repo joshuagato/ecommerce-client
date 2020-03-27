@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Auxil from '../Hoc/Auxil';
 
-import axios from 'axios';
 import { Alert } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
@@ -35,10 +34,6 @@ class Product extends Component {
 
     const productId = this.props.match.params.id;
     this.props.populateProduct(productId);
-
-    axios.get(`${process.env.REACT_APP_GENERAL_PRODUCTS_URL}/${productId}`)
-    .then(response => this.setState({ product: response.data }))
-    .catch(error => this.setState({ failureMessage: error.response }));
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -61,6 +56,7 @@ class Product extends Component {
 
       this.setState({ myReview: updatedState });
       this.handleScroll();
+      this.props.populateProduct(this.props.match.params.id);
     }
   }
 
@@ -119,7 +115,7 @@ class Product extends Component {
                   </div>
                   <div className="col-lg-5">
                     <div className="row">
-                      <div className="col-6">
+                      <div className="col-8">
                         <h4>{product.title}</h4>
                         <p className="m-0">
                           <small>by {product.owner.name}</small>
@@ -128,7 +124,7 @@ class Product extends Component {
                           <small className="text-muted">{product.category.name}</small>
                         </p>
                       </div>
-                      <div className="col-6"></div>
+                      <div className="col-4"></div>
                     </div>
                     <hr />
                     <p className="lead">{product.description}</p>
