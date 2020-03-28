@@ -39,7 +39,7 @@ export const updateDetails = userInput => {
           name: userInput.name,
           email: userInput.email,
           password: userInput.password,
-          isSeller: userInput.isSeller
+          isAnAdmin: userInput.isAnAdmin
         }
         
         const axiosHeaders = {
@@ -61,7 +61,7 @@ export const updateDetails = userInput => {
                 
                 localStorage.setItem('name', getResponse.user.name);
                 localStorage.setItem('email', getResponse.user.email);
-                localStorage.setItem('isSeller', getResponse.user.isSeller);
+                localStorage.setItem('isAnAdmin', getResponse.user.isAnAdmin);
                 localStorage.setItem('token', getResponse.token);
               } else  
                 dispatch(updateSuccessWithWarning(postResponse.message));

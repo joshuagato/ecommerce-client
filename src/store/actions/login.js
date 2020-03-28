@@ -75,7 +75,7 @@ export const logout = () => {
   localStorage.removeItem('name');
   localStorage.removeItem('email');
   localStorage.removeItem('token');
-  localStorage.removeItem('isSeller');
+  localStorage.removeItem('isAnAdmin');
   localStorage.removeItem('addr1');
   localStorage.removeItem('addr2');
   localStorage.removeItem('city');

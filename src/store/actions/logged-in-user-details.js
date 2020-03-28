@@ -23,7 +23,7 @@ export const getLoggedInUserDetails = token => {
         
         localStorage.setItem('name', response.data.user.name);
         localStorage.setItem('email', response.data.user.email);
-        localStorage.setItem('isSeller', response.data.user.isSeller);
+        localStorage.setItem('isAnAdmin', response.data.user.isAnAdmin);
         localStorage.setItem('token', response.data.token);
     })
     .catch(error => console.log(error.response.data.message))

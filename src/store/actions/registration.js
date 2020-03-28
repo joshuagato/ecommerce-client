@@ -54,7 +54,7 @@ export const register = userInput => {
       name: userInput.name,
       email: userInput.email,
       password: userInput.password,
-      isSeller: userInput.isSeller
+      isAnAdmin: userInput.isAnAdmin
     }
 
     axios.post(process.env.REACT_APP_SIGNUP_URL, requestInput).then(response => {

@@ -49,6 +49,8 @@ export class Categories extends Component {
   }
 
   render() {
+    const filteredCategories = this.props.categories.filter((category, id) => id !== 0)
+
     return (
       <Auxil>
         {this.props.categories ?
@@ -65,39 +67,43 @@ export class Categories extends Component {
                   }
                 <div className="list-group">
                   {
-                    this.props.categories.map(category => (
-                      <NavLink key={category._id} to={`/category/${category._id}`} 
-                        className="list-group-item list-group-item-action">
-                          { category.name }
+                    filteredCategories.map(category => (
+                      <NavLink key={category._id} to={`/category/${category._id}`}
+                      className="list-group-item list-group-item-action">
+                      { category.name }
                       </NavLink>
                     ))
                   }
                 </div>
-                <hr style={{'marginTop': '5rem'}} />
-                <div className="card bg-light mt-5">
-                  <div className="card-body">
+              {this.props.isAnAdmin ?
+                <React.Fragment>
+                  <hr style={{'marginTop': '5rem'}} />
+                  <div className="card bg-light mt-5">
+                    <div className="card-body">
                     <h4 className="card-title">Add New Category</h4>
                     <hr />
-                    <form onSubmit={this.addCategory}>
-                        <div className="form-group">
-                          <label htmlFor="newCategoryName">Category</label>
-                          <input id="newCategoryName" type="text" name="newCategoryName" className="form-control"
-                            value={this.state.newCategoryName} onChange={this.inputHandler} />
-                        </div>
-                        <button type="submit" className="btn btn-success submitBtn" 
-                          disabled={this.props.btnDisabled}>
-                            {
-                              this.props.loading ?
-                                <Auxil>
-                                  <span>Loading</span>
-                                  <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
-                                </Auxil> :
-                              'Add Category'
-                            }
-                        </button>
-                    </form>
+                      <form onSubmit={this.addCategory}>
+                      <div className="form-group">
+                      <label htmlFor="newCategoryName">Category</label>
+                      <input id="newCategoryName" type="text" name="newCategoryName" className="form-control"
+                      value={this.state.newCategoryName} onChange={this.inputHandler} />
+                      </div>
+                      <button type="submit" className="btn btn-success submitBtn" disabled={this.props.btnDisabled}>
+                        {
+                          this.props.loading ?
+                            <Auxil>
+                              <span>Loading</span>
+                              <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
+                            </Auxil> :
+                            'Add Category'
+                        }
+                      </button>
+                      </form>
+                    </div>
                   </div>
-                </div>
+                </React.Fragment>
+                : null
+              }
             </div>
           </section> :
           <div className="m-auto settingsSpinner">
@@ -113,6 +119,7 @@ export class Categories extends Component {
 
 const mapStateToProps = state => {
   return {
+    isAnAdmin: state.loggedUserReducer.personalDetails.isAnAdmin,
     categories: state.addCategoryReducer.categories,
     btnDisabled: state.addCategoryReducer.btnDisabled,
     loading: state.addCategoryReducer.loading,

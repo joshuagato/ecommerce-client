@@ -67,7 +67,7 @@ const mapStateToProps = state => {
     return {
         name: state.loggedUserReducer.personalDetails.name,
         email: state.loggedUserReducer.personalDetails.email,
-        isSeller: state.loggedUserReducer.personalDetails.isSeller,
+        isAnAdmin: state.loggedUserReducer.personalDetails.isAnAdmin,
         token: state.loggedUserReducer.personalDetails.token
     };
 }

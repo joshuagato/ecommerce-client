@@ -13,15 +13,13 @@ export class Settings extends Component {
   state = {
     name: '',
     email: '',
-    isSeller: false,
+    isAnAdmin: false,
     password: '',
     confirmPassword: ''
   }
 
   inputHandler = event => {
-    const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
-
-    this.setState({ [event.target.name]: value });
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   updateDetails = event => {
@@ -31,7 +29,7 @@ export class Settings extends Component {
       name: this.state.name,
       email: this.state.email,
       password: this.state.password,
-      isSeller: this.state.isSeller,
+      isAnAdmin: this.state.isAnAdmin,
       token: this.props.token
     };
 
@@ -47,7 +45,7 @@ export class Settings extends Component {
   }
 
   render() {
-    const { name, email, isSeller, token } = this.props;
+    const { name, email, token } = this.props;
 
     return (
       <Auxil>
@@ -77,15 +75,6 @@ export class Settings extends Component {
                           <label htmlFor="email" className="form-control-label">Email</label>
                           <input id="email" type="email" name="email" className="form-control"
                             onChange={this.inputHandler} defaultValue={email} />
-                        </div>
-                        <div className="form-check mb-3">
-                          <label className="form-check-label">
-                            <input type="checkbox" name="isSeller"
-                              onChange={this.inputHandler}
-                                defaultChecked={this.toBoolean(isSeller)}
-                                  className="form-check-input" />
-                            Is Seller
-                          </label>
                         </div>
                         <div className="form-group">
                           <label htmlFor="newPwd" className="form-control-label">New Password</label>
@@ -131,7 +120,7 @@ const mapStateToProps = state => {
   return {
     name: state.loggedUserReducer.personalDetails.name,
     email: state.loggedUserReducer.personalDetails.email,
-    isSeller: state.loggedUserReducer.personalDetails.isSeller,
+    isAnAdmin: state.loggedUserReducer.personalDetails.isAnAdmin,
     token: state.loggedUserReducer.personalDetails.token,
     loading: state.updateReducer.loading,
     successMessage: state.updateReducer.successMessage,

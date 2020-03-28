@@ -4,7 +4,7 @@ const initialState = {
   personalDetails: {
     name: '' || localStorage.getItem('name'),
     email: '' || localStorage.getItem('email'),
-    isSeller: '' || localStorage.getItem('isSeller'),
+    isAnAdmin: '' || localStorage.getItem('isAnAdmin'),
     token: '' || localStorage.getItem('token')
   },
   shippingAddress: {
@@ -22,14 +22,14 @@ const reducer = (state = initialState, action) => {
     case actionTypes.POPULATE_LOGGEDIN_USER_DETAILS:
       return { ...state, personalDetails: {
           ...state.personalDetails, name: action.user.name, email: action.user.email,
-            isSeller: action.user.isSeller, token: action.token
+            isAnAdmin: action.user.isAnAdmin, token: action.token
         }
       };
     
     case actionTypes.UPDATE_SUCCESS:
       return { ...state, personalDetails: {
         ...state.personalDetails, name: action.user.name, email: action.user.email,
-          isSeller: action.user.isSeller, token: action.token
+          isAnAdmin: action.user.isAnAdmin, token: action.token
         }
       };
 
@@ -51,7 +51,7 @@ const reducer = (state = initialState, action) => {
 
     case actionTypes.LOGOUT:
       return { ...state, personalDetails:
-          { ...state.personalDetails, name: null, email: null, isSeller: null, token: null }, shippingAddress:
+          { ...state.personalDetails, name: null, email: null, isAnAdmin: null, token: null }, shippingAddress:
           { ...state.shippingAddress, addr1: null, addr2: null, city: null, state: null, country: null, postalCode: null }
       };
 
