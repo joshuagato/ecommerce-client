@@ -3,7 +3,6 @@ import './Homepage.scss';
 
 import { connect } from 'react-redux';
 
-import Auxil from '../Hoc/Auxil';
 import Banner from './Banner/Banner';
 import AllProducts from './AllProducts/AllProducts';
 

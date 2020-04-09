@@ -58,7 +58,8 @@ class AllProducts extends Component {
                 filteredCategories.map((category, id) => (
                   <NavLink key={category._id} className={'category'} to={`/category/${category._id}`}>
                     <article>
-                      <FontAwesomeIcon icon={id === 0 && faDesktop || id === 1 && faHome || id === 2 && faTshirt} size={'2x'} />
+                      <FontAwesomeIcon icon={(id === 0 && faDesktop) ||
+                        (id === 1 && faHome) || (id === 2 && faTshirt)} size={'2x'} />
                     </article>
                     <p className={'text-muted'}>{category.name}</p>
                   </NavLink>
