@@ -45,6 +45,8 @@ class NavBar extends Component {
   }
        
   render() {
+    const isAdmin = this.props.isAnAdmin
+    console.log(this.props.isAnAdmin);
     return (
       <Navbar id="rbNavbar" expand="lg">
         <Navbar.Brand>
@@ -53,7 +55,7 @@ class NavBar extends Component {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto ml-5">
-            { this.props.isAnAdmin === true && <NavLink to="/categories" className="nav-link" role="button">Categories</NavLink> }
+            { ((isAdmin === true) || (isAdmin === 'true')) && <NavLink to="/categories" className="nav-link" role="button">Categories</NavLink> }
               {
                 this.props.name ? <NavDropdown title={this.props.name} id="basic-nav-dropdown">
                   <NavLink to='/profile' className="dropdown-item nav-link" role="button"><FontAwesomeIcon icon={faUserAlt} /> Profile</NavLink>

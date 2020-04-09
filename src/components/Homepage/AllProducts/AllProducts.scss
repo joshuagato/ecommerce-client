@@ -9,6 +9,10 @@
     display: flex;
     justify-content: center;
 
+    @media (max-width: 576px) {
+      flex-direction: column;
+    }
+
     .category {
       display: flex;
       flex-direction: column;
