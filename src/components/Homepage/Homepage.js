@@ -10,10 +10,10 @@ import AllProducts from './AllProducts/AllProducts';
 class Homepage extends Component {
   render() {
     return (
-      <Auxil>
+      <div className='homepage'>
         <Banner />
         <AllProducts />
-      </Auxil>
+      </div>
     );
   }
 }

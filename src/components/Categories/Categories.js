@@ -5,7 +5,7 @@ import Spinner from 'react-bootstrap/Spinner';
 
 import { connect } from 'react-redux';
 import { Alert } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 
 import Auxil from '../Hoc/Auxil';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -49,70 +49,75 @@ export class Categories extends Component {
   }
 
   render() {
+    let redirect = null
     const filteredCategories = this.props.categories.filter((category, id) => id !== 0)
 
+    if (!this.props.isAnAdmin) redirect = <Redirect to='/' />
+
     return (
-      <Auxil>
-        {this.props.categories ?
-          <section id="categories" className="addBg">
-            <div className="container p-5">
+      <React.Fragment>
+        { redirect }
+        <Auxil>
+          { this.props.categories ?
+            <section id="categories" className="addBg">
+              <div className="container p-5">
                 <h4 className="display-4">Categories</h4>
                 <hr />
-                  {
-                    this.props.successMessage || this.props.failureMessage ? 
-                      <Alert color={this.props.successMessage ? 'success' : 'danger'}>
-                        {this.props.successMessage || this.props.failureMessage}
-                      </Alert> :
+                {
+                  this.props.successMessage || this.props.failureMessage ?
+                    <Alert color={this.props.successMessage ? 'success' : 'danger'}>
+                      {this.props.successMessage || this.props.failureMessage}
+                    </Alert> :
                     null
-                  }
+                }
                 <div className="list-group">
                   {
                     filteredCategories.map(category => (
                       <NavLink key={category._id} to={`/category/${category._id}`}
-                      className="list-group-item list-group-item-action">
-                      { category.name }
+                               className="list-group-item list-group-item-action">
+                        { category.name }
                       </NavLink>
                     ))
                   }
                 </div>
-              {this.props.isAnAdmin ?
-                <React.Fragment>
-                  <hr style={{'marginTop': '5rem'}} />
-                  <div className="card bg-light mt-5">
-                    <div className="card-body">
-                    <h4 className="card-title">Add New Category</h4>
-                    <hr />
-                      <form onSubmit={this.addCategory}>
-                      <div className="form-group">
-                      <label htmlFor="newCategoryName">Category</label>
-                      <input id="newCategoryName" type="text" name="newCategoryName" className="form-control"
-                      value={this.state.newCategoryName} onChange={this.inputHandler} />
+                { this.props.isAnAdmin &&
+                  <React.Fragment>
+                    <hr style={{'marginTop': '5rem'}} />
+                    <div className="card bg-light mt-5">
+                      <div className="card-body">
+                        <h4 className="card-title">Add New Category</h4>
+                        <hr />
+                        <form onSubmit={this.addCategory}>
+                          <div className="form-group">
+                            <label htmlFor="newCategoryName">Category</label>
+                            <input id="newCategoryName" type="text" name="newCategoryName" className="form-control"
+                                   value={this.state.newCategoryName} onChange={this.inputHandler} />
+                          </div>
+                          <button type="submit" className="btn btn-success submitBtn" disabled={this.props.btnDisabled}>
+                            {
+                              this.props.loading ?
+                                <Auxil>
+                                  <span>Loading</span>
+                                  <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
+                                </Auxil> :
+                                'Add Category'
+                            }
+                          </button>
+                        </form>
                       </div>
-                      <button type="submit" className="btn btn-success submitBtn" disabled={this.props.btnDisabled}>
-                        {
-                          this.props.loading ?
-                            <Auxil>
-                              <span>Loading</span>
-                              <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
-                            </Auxil> :
-                            'Add Category'
-                        }
-                      </button>
-                      </form>
                     </div>
-                  </div>
-                </React.Fragment>
-                : null
-              }
+                  </React.Fragment>
+                }
+              </div>
+            </section> :
+            <div className="m-auto settingsSpinner">
+              <h1 className="text-center display-3">
+                <FontAwesomeIcon icon={faSpinner} spin />
+              </h1>
             </div>
-          </section> :
-          <div className="m-auto settingsSpinner">
-            <h1 className="text-center display-3">
-              <FontAwesomeIcon icon={faSpinner} spin />
-            </h1>
-          </div>
-        }
-      </Auxil>
+          }
+        </Auxil>
+      </React.Fragment>
     );
   }
 }

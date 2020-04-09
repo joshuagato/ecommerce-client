@@ -16,7 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserAlt, faShoppingCart, faKey } from '@fortawesome/free-solid-svg-icons';
 // import * as actions from '../../store/actions/index';
 
-export class NavBar extends Component {
+class NavBar extends Component {
 
   collapse = () => {
       this.isCollapsed = true;
@@ -53,7 +53,7 @@ export class NavBar extends Component {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto ml-5">
-            <NavLink to="/categories" className="nav-link" role="button">Categories</NavLink>
+            { this.props.isAnAdmin && <NavLink to="/categories" className="nav-link" role="button">Categories</NavLink> }
               {
                 this.props.name ? <NavDropdown title={this.props.name} id="basic-nav-dropdown">
                   <NavLink to='/profile' className="dropdown-item nav-link" role="button"><FontAwesomeIcon icon={faUserAlt} /> Profile</NavLink>
@@ -77,6 +77,7 @@ export class NavBar extends Component {
 
 const mapStateToProps = state => {
   return {
+    isAnAdmin: state.loggedUserReducer.personalDetails.isAnAdmin,
     name: state.loggedUserReducer.personalDetails.name,
     token: state.loginReducer.token,
   };

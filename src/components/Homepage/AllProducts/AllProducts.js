@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import './AllProducts.scss';
 import Auxil from '../../Hoc/Auxil';
+import { connect } from 'react-redux';
 
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faDesktop, faHome, faTshirt } from '@fortawesome/free-solid-svg-icons';
 import { Alert } from 'reactstrap';
 import Pagination from "react-js-pagination";
+import * as actions from "../../../store/actions";
 
-export class AllProducts extends Component {
+
+class AllProducts extends Component {
 
   state = {
     products: [],
@@ -21,6 +24,7 @@ export class AllProducts extends Component {
     // axios.get(process.env.REACT_APP_GENERAL_PRODUCTS_URL)
     // .then(response => this.setState({ products: response.data.products }))
     // .catch(error => this.setState({ failureMessage: error.response }));
+    this.props.onFetchCategories();
     this.getProducts(this.state.activePage);
   }
 
@@ -36,10 +40,11 @@ export class AllProducts extends Component {
   render() {
     const state = this.state;
     const products = this.state.products;
+    const filteredCategories = this.props.categories.filter((category, id) => id !== 0)
 
     return (
       <Auxil>
-        {products.length > 0 ?
+        { products.length > 0 ?
           <div className="container p-5 all-products">
             {
               state.successMessage || state.failureMessage ? 
@@ -48,6 +53,18 @@ export class AllProducts extends Component {
                 </Alert>:
               null
             }
+            <section className={'categories'}>
+              {
+                filteredCategories.map((category, id) => (
+                  <NavLink key={category._id} className={'category'} to={`/category/${category._id}`}>
+                    <article>
+                      <FontAwesomeIcon icon={id === 0 && faDesktop || id === 1 && faHome || id === 2 && faTshirt} size={'2x'} />
+                    </article>
+                    <p className={'text-muted'}>{category.name}</p>
+                  </NavLink>
+                ))
+              }
+            </section>
             <p className="lead">
               <b>Recommended Deals:</b>
             </p>
@@ -91,4 +108,16 @@ export class AllProducts extends Component {
   }
 }
 
-export default AllProducts;
+const mapStateToProps = state => {
+  return {
+    categories: state.addCategoryReducer.categories
+  };
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchCategories: () => dispatch(actions.fetchCategories())
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllProducts);
