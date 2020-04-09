@@ -46,7 +46,7 @@ class NavBar extends Component {
        
   render() {
     const isAdmin = this.props.isAnAdmin
-    console.log(this.props.isAnAdmin);
+    
     return (
       <Navbar id="rbNavbar" expand="lg">
         <Navbar.Brand>
