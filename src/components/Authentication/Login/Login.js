@@ -109,8 +109,6 @@ const mapStateToProps = state => {
   return {
     loggedIn: state.loggedUserReducer.personalDetails.name !== null &&
         state.loggedUserReducer.personalDetails.token !== null,
-    name: state.loginReducer.name,
-    token: state.loginReducer.token,
     loading: state.loginReducer.loading,
     btnDisabled: state.loginReducer.btnDisabled,
     successMessage: state.loginReducer.successMessage,
